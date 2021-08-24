@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoami-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: whoami-back
+  template:
+    metadata:
+      labels:
+        app: whoami-back
+    spec:
+      containers:
+      - name: whoami-back
+        image: neroalfonso/whoami-api:1.0.0
+        env:
+        - name: PORT
+          value: "80"
+        ports:
+        - containerPort: 80
