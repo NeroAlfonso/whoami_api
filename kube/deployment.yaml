@@ -14,9 +14,20 @@ spec:
     spec:
       containers:
       - name: whoami-back
-        image: neroalfonso/whoami-api:1.0.0
+        image: neroalfonso/whoami-api:1.0.2
         env:
         - name: PORT
           value: "80"
         ports:
         - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /api
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 20
+        livenessProbe:
+          httpGet:
+            path: /api
+            port: 80
+          initialDelaySeconds: 15
