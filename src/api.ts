@@ -1,5 +1,20 @@
 require('dotenv').config();
 const { Client } = require('pg')
+import cors = require("cors");
+import express =require("express");
+
+const corsOpts = {
+    origin: '*',
+  
+    methods: [
+      'GET',
+      'POST',
+    ],
+  
+    allowedHeaders: [
+      'Content-Type',
+    ],
+  };
 
 const port =process.env.PORT;
 const dbName =process.env.DB_NAME;
@@ -17,7 +32,7 @@ const client = new Client(
         port:       dbPort
     }
 )
-import express =require("express");
+
 
 interface ResponseI
 {
@@ -27,6 +42,7 @@ interface ResponseI
 }
 
 let api : express.Application =express();
+api.use(cors(corsOpts));
 api.get('/', (req, res) => res.send('¡Hola mundo!'));
 api.get('/visit', async (req, res) => res.send(await applyVisit()));
 api.listen(port, () => console.log(`Arriba, puerto ${port}`));
